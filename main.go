@@ -35,3 +35,28 @@ func (b *Board) count() (int, int) {
 	}
 	return white, 0
 }
+
+func (b *Board) flip(row int, column int) {
+	b.flip_forward(row, column, 1)
+	b.flip_forward(row, column, -1)
+}
+
+func (b *Board) flip_forward(row int, column int, forward int) {
+	color := b.tokens[row][column]
+	flip_list := make([]int, 0, 8)
+	for {
+		row += forward
+		if 0 > row || row >= 8 {
+			break
+		}
+		ocolor := b.tokens[row][column]
+		if -ocolor == color {
+			flip_list = append(flip_list, row)
+		} else {
+			break
+		}
+	}
+	for _, i := range flip_list {
+		b.tokens[i][column] = color
+	}
+}

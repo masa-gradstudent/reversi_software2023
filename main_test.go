@@ -60,3 +60,27 @@ func TestCount02(t *testing.T) {
 		t.Errorf("Count Error")
 	}
 }
+
+func TestFlip(t *testing.T) {
+	b := create_board()
+	b.tokens[2][3] = BLACK
+	b.tokens[3][3] = WHITE
+	b.tokens[4][3] = WHITE
+	b.tokens[5][3] = WHITE
+	b.tokens[6][3] = BLACK
+	b.flip(6, 3)
+	expected := [8][8]int{
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+		{0, 0, 0, BLACK, 0, 0, 0, 0},
+		{0, 0, 0, BLACK, 0, 0, 0, 0},
+		{0, 0, 0, BLACK, 0, 0, 0, 0},
+		{0, 0, 0, BLACK, 0, 0, 0, 0},
+		{0, 0, 0, BLACK, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+	}
+
+	if !reflect.DeepEqual(b.tokens, expected) {
+		t.Errorf("Flip Error: %d", b.tokens)
+	}
+}
