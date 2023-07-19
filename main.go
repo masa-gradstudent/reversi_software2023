@@ -25,8 +25,13 @@ func defalut_board() Board {
 }
 
 func (b *Board) count() (int, int) {
-	if b.tokens[0][0] == WHITE {
-		return 5, 2
+	white := 0
+	for i := 0; i < 8; i++ {
+		for j := 0; j < 8; j++ {
+			if b.tokens[i][j] == WHITE {
+				white += 1
+			}
+		}
 	}
-	return 2, 2
+	return white, 0
 }

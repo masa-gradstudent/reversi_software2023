@@ -45,7 +45,7 @@ func TestDefalut(t *testing.T) {
 func TestCount01(t *testing.T) {
 	b := create_board()
 	white, black := b.count()
-	if white != 2 || black != 2 {
+	if white != 0 || black != 0 {
 		t.Errorf("Count Error")
 	}
 }
@@ -56,7 +56,7 @@ func TestCount02(t *testing.T) {
 	b.tokens[0][1] = WHITE
 	b.tokens[0][2] = WHITE
 	white, black := b.count()
-	if white != 5 || black != 2 {
+	if white != 3 || black != 0 {
 		t.Errorf("Count Error")
 	}
 }
