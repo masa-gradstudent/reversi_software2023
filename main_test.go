@@ -46,7 +46,7 @@ func TestCount01(t *testing.T) {
 	b := create_board()
 	white, black := b.count()
 	if white != 0 || black != 0 {
-		t.Errorf("Count Error")
+		t.Errorf("Count01 Error")
 	}
 }
 
@@ -57,7 +57,18 @@ func TestCount02(t *testing.T) {
 	b.tokens[0][2] = WHITE
 	white, black := b.count()
 	if white != 3 || black != 0 {
-		t.Errorf("Count Error")
+		t.Errorf("Count02 Error")
+	}
+}
+
+func TestCount03(t *testing.T) {
+	b := create_board()
+	b.tokens[3][0] = BLACK
+	b.tokens[3][1] = BLACK
+	b.tokens[3][2] = BLACK
+	white, black := b.count()
+	if white != 0 || black != 3 {
+		t.Errorf("Count03 Error")
 	}
 }
 
