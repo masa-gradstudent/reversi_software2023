@@ -27,14 +27,17 @@ func defalut_board() Board {
 
 func (b *Board) count() (int, int) {
 	white := 0
+	black := 0
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			if b.tokens[i][j] == WHITE {
 				white += 1
+			} else if b.tokens[i][j] == BLACK {
+				black += 1
 			}
 		}
 	}
-	return white, 0
+	return white, black
 }
 
 func (b *Board) flip(row int, column int) {
