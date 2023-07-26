@@ -41,6 +41,7 @@ func TestDefalut(t *testing.T) {
 
 	}
 }
+
 func TestCount01(t *testing.T) {
 	b := create_board()
 	white, black := b.count()

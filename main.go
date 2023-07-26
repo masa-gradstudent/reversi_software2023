@@ -24,6 +24,7 @@ func defalut_board() Board {
 	b.tokens[4][4] = WHITE
 	return b
 }
+
 func (b *Board) count() (int, int) {
 	white := 0
 	for i := 0; i < 8; i++ {
