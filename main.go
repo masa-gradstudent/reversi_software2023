@@ -74,3 +74,17 @@ func determineWinner(white, black int) string {
 		return "It's a tie!"
 	}
 }
+func printBoard(b Board) {
+	for i := 0; i < 8; i++ {
+		for j := 0; j < 8; j++ {
+			if b.tokens[i][j] == WHITE {
+				fmt.Print("W ")
+			} else if b.tokens[i][j] == BLACK {
+				fmt.Print("B ")
+			} else {
+				fmt.Print(". ")
+			}
+		}
+		fmt.Println()
+	}
+}
