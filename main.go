@@ -1,5 +1,9 @@
 package main
 
+import (
+	"fmt"
+)
+
 const (
 	WHITE = 1
 	BLACK = -1
@@ -88,10 +92,53 @@ func printBoard(b Board) {
 		fmt.Println()
 	}
 }
+
 func (b *Board) switchTurn() {
 	if b.currentTurn == WHITE {
 		b.currentTurn = BLACK
 	} else {
 		b.currentTurn = WHITE
 	}
+}
+func (b *Board) isValidMove(row int, column int) bool {
+	if b.tokens[row][column] != 0 {
+		return false
+	}
+	color := b.currentTurn
+	for dr := -1; dr <= 1; dr++ {
+		for dc := -1; dc <= 1; dc++ {
+			if dr == 0 && dc == 0 {
+				continue
+			}
+			if b.checkDirection(row, column, dr, dc, color) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+func (b *Board) checkDirection(row, column, dr, dc, color int) bool {
+	row += dr
+	column += dc
+	if row < 0 || row >= 8 || column < 0 || column >= 8 {
+		return false
+	}
+	ocolor := b.tokens[row][column]
+	if ocolor == -color {
+		return b.checkDirection(row, column, dr, dc, color)
+	} else if ocolor == color {
+		return true
+	}
+	return false
+}
+
+func (b *Board) makeMove(row, column int) bool {
+	if !b.isValidMove(row, column) {
+		return false
+	}
+	b.tokens[row][column] = b.currentTurn
+	b.flip(row, column)
+	b.currentTurn = -b.currentTurn
+	return true
 }

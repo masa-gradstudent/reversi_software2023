@@ -127,3 +127,39 @@ func TestSwitchTurn(t *testing.T) {
 		t.Errorf("TestSwitchTurn failed: Expected WHITE as the current player, got %d", b.currentTurn)
 	}
 }
+
+func TestIsValidMove(t *testing.T) {
+	board := defalut_board()
+	// Make some moves to change the board state
+	board.makeMove(2, 3)
+	board.makeMove(4, 3)
+
+	if board.isValidMove(3, 3) {
+		t.Errorf("Expected move (3, 3) to be invalid, but it was valid.")
+	}
+}
+
+func TestCheckDirection(t *testing.T) {
+	// Initialize a test board
+	board := defalut_board()
+
+	if board.checkDirection(3, 3, 0, -1, WHITE) {
+		t.Errorf("Expected checkDirection to return false for direction (0, -1) for WHITE token, but it returned true.")
+	}
+}
+
+func TestMakeMove(t *testing.T) {
+	// Initialize a test board
+	board := defalut_board()
+
+	// Test making a valid move
+	moveRow, moveCol := 2, 3
+	if !board.makeMove(moveRow, moveCol) {
+		t.Errorf("Expected move (%d, %d) to be valid, but it was not.", moveRow, moveCol)
+	}
+	// Test making an invalid move	moveRow, moveCol = 3, 3
+	moveRow, moveCol = 3, 3
+	if board.makeMove(moveRow, moveCol) {
+		t.Errorf("Expected move (%d, %d) to be invalid, but it was valid.", moveRow, moveCol)
+	}
+}
