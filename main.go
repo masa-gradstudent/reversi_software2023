@@ -44,31 +44,6 @@ func (b *Board) count() (int, int) {
 	return white, black
 }
 
-func (b *Board) flip(row int, column int) {
-	b.flip_forward(row, column, 1)
-	b.flip_forward(row, column, -1)
-}
-
-func (b *Board) flip_forward(row int, column int, forward int) {
-	color := b.tokens[row][column]
-	flip_list := make([]int, 0, 8)
-	for {
-		row += forward
-		if 0 > row || row >= 8 {
-			break
-		}
-		ocolor := b.tokens[row][column]
-		if -ocolor == color {
-			flip_list = append(flip_list, row)
-		} else {
-			break
-		}
-	}
-	for _, i := range flip_list {
-		b.tokens[i][column] = color
-	}
-}
-
 func determineWinner(white, black int) string {
 	if white > black {
 		return "White wins!"
@@ -142,3 +117,101 @@ func (b *Board) makeMove(row, column int) bool {
 	b.currentTurn = -b.currentTurn
 	return true
 }
+
+
+func (b *Board) flip_right_under(row int, column int, forward int) {
+	color := b.tokens[row][column]
+	flip_list := make([][2]int, 0, 8)
+	for {
+		column += forward
+		row += forward
+
+		if 0 > column || column >= 8 || 0 > row || row >= 8 {
+			break
+		}
+		ocolor := b.tokens[row][column]
+		if -ocolor == color {
+			flip_list = append(flip_list, [2]int{row, column})
+		} else {
+			break
+		}
+	}
+	return false
+}
+
+func (b *Board) flip_column(row int, column int, forward int) {
+	color := b.tokens[row][column]
+	flip_list := make([]int, 0, 8)
+	for {
+		column += forward
+		if 0 > column || column >= 8 {
+			break
+		}
+		ocolor := b.tokens[row][column]
+		if -ocolor == color {
+			flip_list = append(flip_list, column)
+		} else {
+			break
+		}
+	}
+	for _, i := range flip_list {
+		b.tokens[row][i] = color
+	}
+	return false
+}
+func (b *Board) flip_left_under(row int, column int, forward int) {
+	color := b.tokens[row][column]
+	flip_list := make([][2]int, 0, 8)
+	for {
+		column += forward
+		row -= forward
+
+		if 0 > column || column >= 8 || 0 > row || row >= 8 {
+			break
+		}
+		ocolor := b.tokens[row][column]
+		if -ocolor == color {
+			flip_list = append(flip_list, [2]int{row, column})
+		} else {
+			break
+		}
+	}
+	for _, coord := range flip_list {
+		b.tokens[coord[0]][coord[1]] = color
+	}
+}
+func (b *Board) flip(row int, column int) {
+	b.flip_row(row, column, 1)
+	b.flip_row(row, column, -1)
+	b.flip_column(row, column, 1)
+	b.flip_column(row, column, -1)
+	b.flip_right_under(row, column, 1)
+	b.flip_right_under(row, column, -1)
+	b.flip_left_under(row, column, 1)
+	b.flip_left_under(row, column, -1)
+}
+func (b *Board) put(row int, column int, color int) {
+	b.tokens[row][column] = color
+	b.flip(row, column)
+}
+
+func (b *Board) flip_row(row int, column int, forward int) {
+	color := b.tokens[row][column]
+	flip_list := make([]int, 0, 8)
+	for {
+		row += forward
+		if 0 > row || row >= 8 {
+			break
+		}
+		ocolor := b.tokens[row][column]
+		if -ocolor == color {
+			flip_list = append(flip_list, row)
+		} else {
+			break
+		}
+	}
+	for _, i := range flip_list {
+		b.tokens[i][column] = color
+	}
+}
+
