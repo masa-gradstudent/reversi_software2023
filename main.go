@@ -88,3 +88,10 @@ func printBoard(b Board) {
 		fmt.Println()
 	}
 }
+func (b *Board) switchTurn() {
+	if b.currentTurn == WHITE {
+		b.currentTurn = BLACK
+	} else {
+		b.currentTurn = WHITE
+	}
+}

@@ -114,3 +114,16 @@ func TestDetermineWinner(t *testing.T) {
 		t.Errorf("Test case 3 failed: Expected 'It's a tie!', got '%s'", result3)
 	}
 }
+func TestSwitchTurn(t *testing.T) {
+	b := create_board()
+	b.currentTurn = WHITE
+	b.switchTurn()
+	if b.currentTurn != BLACK {
+		t.Errorf("TestSwitchTurn failed: Expected BLACK as the current player, got %d", b.currentTurn)
+	}
+
+	b.switchTurn()
+	if b.currentTurn != WHITE {
+		t.Errorf("TestSwitchTurn failed: Expected WHITE as the current player, got %d", b.currentTurn)
+	}
+}
