@@ -6,7 +6,8 @@ const (
 )
 
 type Board struct {
-	tokens [8][8]int
+	tokens      [8][8]int
+	currentTurn int
 }
 
 func create_board() Board {
@@ -26,14 +27,17 @@ func defalut_board() Board {
 
 func (b *Board) count() (int, int) {
 	white := 0
+	black := 0
 	for i := 0; i < 8; i++ {
 		for j := 0; j < 8; j++ {
 			if b.tokens[i][j] == WHITE {
 				white += 1
+			} else if b.tokens[i][j] == BLACK {
+				black += 1
 			}
 		}
 	}
-	return white, 0
+	return white, black
 }
 
 func (b *Board) flip(row int, column int) {
@@ -58,5 +62,36 @@ func (b *Board) flip_forward(row int, column int, forward int) {
 	}
 	for _, i := range flip_list {
 		b.tokens[i][column] = color
+	}
+}
+
+func determineWinner(white, black int) string {
+	if white > black {
+		return "White wins!"
+	} else if black > white {
+		return "Black wins!"
+	} else {
+		return "It's a tie!"
+	}
+}
+func printBoard(b Board) {
+	for i := 0; i < 8; i++ {
+		for j := 0; j < 8; j++ {
+			if b.tokens[i][j] == WHITE {
+				fmt.Print("W ")
+			} else if b.tokens[i][j] == BLACK {
+				fmt.Print("B ")
+			} else {
+				fmt.Print(". ")
+			}
+		}
+		fmt.Println()
+	}
+}
+func (b *Board) switchTurn() {
+	if b.currentTurn == WHITE {
+		b.currentTurn = BLACK
+	} else {
+		b.currentTurn = WHITE
 	}
 }
